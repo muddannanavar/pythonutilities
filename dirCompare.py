@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 from filecmp import dircmp
+import sys
 
-DIR_1="/tmp/test2/repo1"
-DIR_2="/tmp/test2/repo2"
+#DIR_1="/tmp/test2/repo1"
+#DIR_2="/tmp/test2/repo2"
+
+DIR_1=sys.argv[1]
+DIR_2=sys.argv[2]
 
 #result = dircmp(DIR_1, DIR_2)
 different_list = []
