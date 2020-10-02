@@ -9,12 +9,27 @@ DIR_1=sys.argv[1]
 DIR_2=sys.argv[2]
 DIFF_REPORT="diffReport.txt"
 CONSOLIDATED_REPORT="ConsolidateCompareReport.txt"
+EXCLUDE_LIST="excludeList.txt"
 
 #result = dircmp(DIR_1, DIR_2)
 different_list = []
 common_list = []
 dir1_only_list = []
 dir2_only_list = []
+
+exclude_list = {}
+
+with open(EXCLUDE_LIST, 'r') as el:
+    for line in el:
+        line = line.rstrip('\n')
+        exclude_list[line] = 'NOT_FOUND'
+
+def check_in_excludelist(addon):
+    if addon in exclude_list.keys():
+        exclude_list[line] = 'FOUND'
+        return True
+    else:
+        return False
 
 def get_diff_files(dcmp):
     for name in dcmp.diff_files:
@@ -83,6 +98,9 @@ with open(CONSOLIDATED_REPORT, 'w') as cr:
         dir_path=i['dir1_path'].replace(DIR_1,'.')
         file_name = i['name']
         file_path=f"{dir_path}/{file_name}" 
+        add_on_name=file_path.split("/")[1]
+        if check_in_excludelist(add_on_name):
+            continue        
         addon_extract=re.search('/addon/(.+?)/.*', file_path)
         if addon_extract:
             addon_name = addon_extract.group(1)        
@@ -98,6 +116,9 @@ with open(CONSOLIDATED_REPORT, 'w') as cr:
         dir_path=i['dir2_path'].replace(DIR_2,'.')
         file_name = i['name']
         file_path=f"{dir_path}/{file_name}" 
+        add_on_name=file_path.split("/")[1]
+        if check_in_excludelist(add_on_name):
+            continue           
         addon_extract=re.search('/addon/(.+?)/.*', file_path)
         if addon_extract:
             addon_name = addon_extract.group(1)        
@@ -134,7 +155,11 @@ with open(CONSOLIDATED_REPORT, 'w') as cr:
     for i in different_list:
         l_file = f"{i['dir1_path']}/{i['name']}"
         r_file = f"{i['dir2_path']}/{i['name']}"
+        file_path = r_file
         dir_path=i['dir1_path'].replace(DIR_1,'.')
+        add_on_name=file_path.split("/")[1]
+        if check_in_excludelist(add_on_name):
+            continue           
         file_name = i['name']
         cr.write(f"\n{' ':10}{counter}. {dir_path}/{file_name}\n")
         for line in get_diff(l_file=l_file, r_file=r_file).splitlines():
