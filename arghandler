@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+import re, sys, os, shutil, time
+
+def help():
+    print('''
+        This script takes 2 arguments or none - start_time and end_time
+        if not passed will default to,
+            start_time: 'current GMT - 24h'
+            end_time: 'current GMT'
+
+        start_time and end_time should be in YYYY-MM-DDTHH:MI:SS.sssZ (ex:2021-01-20T00:06:00.463Z)
+        ''')
+
+if len(sys.argv)<2:
+    d = dt.datetime.utcnow()
+    end_time = d.isoformat()[:-3]+'Z'
+    start_time = (d - dt.timedelta(days=1)).isoformat()[:-3]+'Z'
+else:
+    try:
+        start_time = sys.argv[1]
+        end_time = sys.argv[2]
+        #check if start_time and end_time matches required format
+        if not re.search(TIME_FORMAT, start_time) or not re.search(TIME_FORMAT, end_time):
+            print("Error: wrong format in arguments\n")
+            help()
+            exit(2)
+    except Exception as e:
+        print("Error: invalid arguments\n")
+        help()
+        exit(1)
