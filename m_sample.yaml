@@ -1,0 +1,39 @@
+dataset_name: sample_dataset
+interface: interdace_x
+source: source_x
+#env: env_x
+country_code: 'US'
+app_name: 123
+region_name: us-west-1
+bucket_name: sre-bucket
+redshift_role: admin
+secret_path: /opt/app/cert
+sns_topic: sns_x
+InterfaceRSJobs:
+  - name: name_x
+    steps:
+      configuration:
+        input:
+          src_tablename: table_x
+        transformation:
+          src_transformation:
+            type: type_x
+            conditions: condition_x
+          _elt_process:
+            type: type_x
+            natural_key_columns:
+              - "abcd"
+              - "abcd"
+            exclude_delta_detection_columns:
+              - "abcd"
+              - "abcd"
+            updt_condition:
+              - 123
+              - abcd
+            del_flag_mapping:
+              - abcd
+              - abcd
+        output:
+          target_tablename: table_x
+source_conditions: source_x  
+ 

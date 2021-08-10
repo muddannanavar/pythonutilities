@@ -1,0 +1,158 @@
+{
+    'dataset_name': {
+        'required': True,
+        'type': 'integer'
+    },
+    'interface': {
+        'required': True,
+        'type': 'string'
+    },
+    'source': {
+        'required': True,
+        'type': 'string'
+    },
+    'env': {
+        'required': True,
+        'type': 'string'
+    },
+    'country_code': {
+        'required': True,
+        'type': 'string'
+    },  
+    'app_name': {
+        'required': True,
+        'type': 'string'
+    },   
+    'region_name': {
+        'required': True,
+        'type': 'string'
+    },
+    'bucket_name': {
+        'required': True,
+        'type': 'string'
+    },
+    'redshift_role': {
+        'required': True,
+        'type': 'string'
+    },
+    'secret_path': {
+        'required': True,
+        'type': 'string'
+    },
+    'sns_topic': {
+        'required': True,
+        'type': 'string'
+    },
+    'InterfaceRSJobs': {
+        'required': True,
+        'type': 'list',
+        'items': [
+            {   
+                'type': 'dict',
+                'required': True,
+                'schema': {
+                    'name': {
+                        'required': True,
+                        'type' : 'string'
+                        },
+                    'steps': {
+                        'required': True,
+                        'type': 'dict',
+                        'schema': {
+                            'configuration': {
+                                'required': True,
+                                'type' : 'dict',
+                                'schema': {
+                                    'input': {
+                                        'required': True,
+                                        'type' : 'dict',
+                                        'schema': {
+                                            'src_tablename': {
+                                                'required': True,
+                                                'type': 'string'
+                                            }
+                                        }
+                                    },
+                                    'transformation': {
+                                        'required': True,
+                                        'type' : 'dict',
+                                        'schema': {
+                                            'src_transformation': {
+                                                'required': True,
+                                                'type': 'dict',
+                                                'schema': {
+                                                    'type':{
+                                                        'required': True,
+                                                        'type': 'string'
+                                                    },
+                                                    'conditions':{
+                                                        'required': True,
+                                                        'type': 'string'
+                                                    }                                                    
+                                                }
+                                            },
+                                            '_elt_process': {
+                                                'required': True,
+                                                'type': 'dict',
+                                                'schema': {
+                                                    'type':{
+                                                        'required': True,
+                                                        'type': 'string'
+                                                    },
+                                                    'natural_key_columns':{
+                                                        'required': True,
+                                                        'type': 'list',
+                                                        'schema': {
+                                                             'type':'string' 
+                                                        }
+                                                    },
+                                                    'exclude_delta_detection_columns':{
+                                                        'required': True,
+                                                        'type': 'list',
+                                                        'schema': {
+                                                             'type':'string' 
+                                                        }
+                                                    },
+                                                    'updt_condition':{
+                                                        'required': True,
+                                                        'type': 'list',
+                                                        'schema': {
+                                                             'type':'string' 
+                                                        }
+                                                    },
+                                                    'del_flag_mapping':{
+                                                        'required': True,
+                                                        'type': 'list',
+                                                        'schema': {
+                                                             'type':'string' 
+                                                        }
+                                                    }                                                                                                                                                                                                               
+                                                }                                                
+                                            }                                            
+                                        }
+                                    },
+                                    'output': {
+                                        'required': True,
+                                        'type': 'dict',
+                                        'schema': {
+                                            'target_tablename': {
+                                                'required': True,
+                                                'type': 'string'
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        ]        
+    },
+    'source_conditions': {
+        'required': True,
+        'type': 'string'
+    }
+
+}
